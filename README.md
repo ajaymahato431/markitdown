@@ -88,6 +88,85 @@ You can also pipe content:
 cat path-to-file.pdf | markitdown
 ```
 
+### Batch Conversion (Directory)
+
+MarkItDown includes a `markitdown-batch` command to recursively convert all `.doc` and `.docx` files in a directory to Markdown, preserving the original folder structure.
+
+**Basic usage:**
+
+```bash
+markitdown-batch /path/to/input /path/to/output
+```
+
+This will:
+1. Recursively scan the input directory for `.doc` and `.docx` files.
+2. Convert each `.doc` file to `.docx` automatically using Microsoft Word (via COM, Windows only).
+3. Convert each `.docx` file to Markdown using the MarkItDown pipeline.
+4. Save the resulting `.md` files into the output directory, maintaining the original folder structure and file names.
+
+**Example:**
+
+```bash
+markitdown-batch C:\Documents\LegalFiles C:\Documents\MarkdownOutput
+```
+
+Given this input structure:
+```
+LegalFiles/
+├── contracts/
+│   ├── agreement.docx
+│   └── amendment.doc
+└── notices/
+    └── notice.docx
+```
+
+The output will be:
+```
+MarkdownOutput/
+├── contracts/
+│   ├── agreement.md
+│   └── amendment.md
+└── notices/
+    └── notice.md
+```
+
+**Progress output:**
+
+The command shows real-time progress in the terminal:
+```
+Input : C:\Documents\LegalFiles
+Output: C:\Documents\MarkdownOutput
+Found 642 file(s) to process.
+
+[1/642] agreement.docx — Converting to markdown...
+[1/642] agreement.docx — OK -> C:\Documents\MarkdownOutput\contracts\agreement.md
+[2/642] amendment.doc — Converting (.doc -> .docx)...
+[2/642] amendment.doc — Converting to markdown...
+[2/642] amendment.doc — OK -> C:\Documents\MarkdownOutput\contracts\amendment.md
+...
+
+==================================================
+BATCH CONVERSION SUMMARY
+==================================================
+  Total files : 642
+  Succeeded   : 640
+  Failed      : 2
+==================================================
+```
+
+**Options:**
+
+```bash
+markitdown-batch --help
+markitdown-batch -p /path/to/input /path/to/output   # Enable 3rd-party plugins
+```
+
+> [!NOTE]
+> **`.doc` file support (Windows only):** Converting legacy `.doc` files requires Microsoft Word to be installed on the machine. MarkItDown uses Word's COM interface (via `pywin32`) to convert `.doc` files to `.docx` behind the scenes before processing them. `.docx` files work on all platforms without Word.
+
+> [!TIP]
+> If `markitdown-batch` gives a "Permission denied" error in Git Bash, run `chmod +x .venv/Scripts/markitdown-batch` once, or use `python -m markitdown.__batch__` as an alternative.
+
 ### Optional Dependencies
 MarkItDown has optional dependencies for activating various file formats. Earlier in this document, we installed all optional dependencies with the `[all]` option. However, you can also install them individually for more control. For example:
 
