@@ -35,6 +35,7 @@ Markdown-formatted text, and understand it well. As a side benefit, Markdown con
 are also highly token-efficient.
 
 ## Prerequisites
+
 MarkItDown requires Python 3.10 through 3.14. It is recommended to use a virtual environment to avoid dependency conflicts.
 
 With the standard Python installation, you can create and activate a virtual environment using the following commands:
@@ -97,9 +98,11 @@ MarkItDown includes a `markitdown-batch` command to recursively convert all `.do
 
 ```bash
 markitdown-batch /path/to/input /path/to/output
+markitdown-batch ./input ./output
 ```
 
 This will:
+
 1. Recursively scan the input directory for `.doc` and `.docx` files.
 2. Convert each `.doc` file to `.docx` automatically using Microsoft Word (via COM, Windows only).
 3. Convert each `.docx` file to Markdown using the MarkItDown pipeline.
@@ -112,6 +115,7 @@ markitdown-batch C:\Documents\LegalFiles C:\Documents\MarkdownOutput
 ```
 
 Given this input structure:
+
 ```
 LegalFiles/
 ├── contracts/
@@ -122,6 +126,7 @@ LegalFiles/
 ```
 
 The output will be:
+
 ```
 MarkdownOutput/
 ├── contracts/
@@ -134,6 +139,7 @@ MarkdownOutput/
 **Progress output:**
 
 The command shows real-time progress in the terminal:
+
 ```
 Input : C:\Documents\LegalFiles
 Output: C:\Documents\MarkdownOutput
@@ -169,6 +175,7 @@ markitdown-batch -p /path/to/input /path/to/output   # Enable 3rd-party plugins
 > If `markitdown-batch` gives a "Permission denied" error in Git Bash, run `chmod +x .venv/Scripts/markitdown-batch` once, or use `python -m markitdown.__batch__` as an alternative.
 
 ### Optional Dependencies
+
 MarkItDown has optional dependencies for activating various file formats. Earlier in this document, we installed all optional dependencies with the `[all]` option. However, you can also install them individually for more control. For example:
 
 ```bash
@@ -179,17 +186,17 @@ will install only the dependencies for PDF, DOCX, and PPTX files.
 
 At the moment, the following optional dependencies are available:
 
-* `[all]` Installs all optional dependencies
-* `[pptx]` Installs dependencies for PowerPoint files
-* `[docx]` Installs dependencies for Word files
-* `[xlsx]` Installs dependencies for Excel files
-* `[xls]` Installs dependencies for older Excel files
-* `[pdf]` Installs dependencies for PDF files
-* `[outlook]` Installs dependencies for Outlook messages
-* `[az-doc-intel]` Installs dependencies for Azure Document Intelligence
-* `[az-content-understanding]` Installs dependencies for Azure Content Understanding
-* `[audio-transcription]` Installs dependencies for audio transcription of wav and mp3 files
-* `[youtube-transcription]` Installs dependencies for fetching YouTube video transcription
+- `[all]` Installs all optional dependencies
+- `[pptx]` Installs dependencies for PowerPoint files
+- `[docx]` Installs dependencies for Word files
+- `[xlsx]` Installs dependencies for Excel files
+- `[xls]` Installs dependencies for older Excel files
+- `[pdf]` Installs dependencies for PDF files
+- `[outlook]` Installs dependencies for Outlook messages
+- `[az-doc-intel]` Installs dependencies for Azure Document Intelligence
+- `[az-content-understanding]` Installs dependencies for Azure Content Understanding
+- `[audio-transcription]` Installs dependencies for audio transcription of wav and mp3 files
+- `[youtube-transcription]` Installs dependencies for fetching YouTube video transcription
 
 ### Plugins
 
@@ -254,13 +261,13 @@ Content Understanding is ideal when you need capabilities beyond what built-in o
 - **Higher-quality document extraction** — Cloud-based layout analysis and OCR for scanned PDFs, complex tables, and multi-page documents.
 - **Single API for all modalities** — One `cu_endpoint` handles documents, images, audio, and video with automatic analyzer routing.
 
-| Capability | Built-in converters | Azure Document Intelligence | Azure Content Understanding |
-|------------|---------------------|-----------------------------|-----------------------------|
-| Document conversion | Offline, format-specific extraction | Cloud layout extraction | Cloud multimodal extraction |
-| Structured fields | Not available | YAML front matter from model or query fields | YAML front matter from analyzer fields |
-| Custom analyzers/models | Not available | Supported with `docintel_model_id` | Supported with `cu_analyzer_id` |
-| Audio and video | Basic audio, no video | Not supported | Audio and video analyzers |
-| Cost | Local compute only | Billable Azure API calls | Billable Azure API calls |
+| Capability              | Built-in converters                 | Azure Document Intelligence                  | Azure Content Understanding            |
+| ----------------------- | ----------------------------------- | -------------------------------------------- | -------------------------------------- |
+| Document conversion     | Offline, format-specific extraction | Cloud layout extraction                      | Cloud multimodal extraction            |
+| Structured fields       | Not available                       | YAML front matter from model or query fields | YAML front matter from analyzer fields |
+| Custom analyzers/models | Not available                       | Supported with `docintel_model_id`           | Supported with `cu_analyzer_id`        |
+| Audio and video         | Basic audio, no video               | Not supported                                | Audio and video analyzers              |
+| Cost                    | Local compute only                  | Billable Azure API calls                     | Billable Azure API calls               |
 
 **CLI:**
 
